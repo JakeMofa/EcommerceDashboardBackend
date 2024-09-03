@@ -1,0 +1,2157 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/vendoCommerce"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_VENDO_COMMERCE_URL")
+}
+
+model users {
+  id                                     Int           @id @default(autoincrement())
+  parent                                 Int?
+  u_name                                 String        @db.VarChar(150)
+  u_last_name                            String?       @db.VarChar(100)
+  u_role                                 String?       @db.VarChar(150)
+  u_amazon_seller_name                   String?       @db.VarChar(200)
+  u_amazon_marketplace_name              String?       @db.VarChar(100)
+  u_permission                           String?       @db.Text
+  allowed_user_id                        String?       @db.Text
+  u_email                                String        @db.VarChar(150)
+  u_password                             String        @db.VarChar(255)
+  u_contact_no                           String?       @db.VarChar(20)
+  u_photo                                String?       @db.VarChar(255)
+  u_address                              String?       @db.VarChar(255)
+  u_city                                 String?       @db.VarChar(50)
+  u_country                              String?       @db.VarChar(50)
+  u_cust_id                              String?       @db.VarChar(150)
+  u_card_last_no                         Int?
+  u_type                                 Int
+  access_token                           String?       @db.Text
+  password_reset_token                   String?       @db.VarChar(255)
+  auth_key                               String?       @db.VarChar(255)
+  u_refunded                             Int?
+  u_canceled                             Int?
+  u_payment                              Int           @default(0)
+  u_mws_seller_id                        String?       @db.VarChar(100)
+  u_mws_auth_token                       String?       @db.VarChar(150)
+  u_mws_status                           Int           @default(1)
+  u_is_logged                            Int?          @default(0)
+  u_is_auto_logout                       Int?          @default(0)
+  u_aff_username                         String?       @db.VarChar(100)
+  u_aff_password                         String?       @db.VarChar(255)
+  u_affiliate_id                         String?       @db.VarChar(100)
+  u_affiliate_status                     Int?
+  u_sub_plan                             String?       @db.VarChar(100)
+  u_refer_date                           DateTime?     @db.Date
+  db_name                                String?       @db.VarChar(255)
+  u_db_server                            String?       @db.VarChar(255)
+  u_db_username                          String?       @db.VarChar(255)
+  u_db_password                          String?       @db.VarChar(255)
+  u_enterprise_id                        Int?
+  u_first_google_sheet_name              String?       @db.VarChar(100)
+  u_second_google_sheet_name             String?       @db.VarChar(100)
+  u_first_google_sheet_id                String?       @db.VarChar(200)
+  u_second_google_sheet_id               String?       @db.VarChar(200)
+  amazon_advertising_access_token        String?       @db.Text
+  amazon_advertising_refresh_token       String?       @db.Text
+  amazon_advertising_token_type          String?       @db.VarChar(100)
+  amazon_advertising_access_token_expiry BigInt?
+  amazon_advertising_profile_id          String?       @db.Text
+  amazon_advertising_marketplace_id      String?       @db.VarChar(50)
+  amazon_advertising_client_id           String?       @db.Text
+  amazon_advertising_client_secret       String?       @db.Text
+  amazon_advertising_return_url          String?       @db.VarChar(255)
+  amazon_advertising_response            String?       @db.Text
+  rds_credential_id                      Int?
+  server_credential_id                   Int?
+  u_is_assigned                          Int?          @default(0)
+  u_active_asin_count                    Int?
+  u_allowed_report_count                 Int           @default(0)
+  pending_reports                        Int?          @default(0)
+  status                                 Int           @default(0)
+  user_status                            Int
+  avg_order_per_day                      Int           @default(0)
+  avg_sku                                Int           @default(0)
+  business_report_is_done                Boolean?      @default(false)
+  business_report_count                  Int?          @default(0)
+  previous_business_report_dates         String?       @db.Text
+  created_at                             BigInt?
+  updated_at                             BigInt?
+  created_by                             Int?
+  updated_by                             Int?
+  last_update                            BigInt?
+  syncing_data                           String?       @db.VarChar(255)
+  sync_progress                          String?       @db.VarChar(255)
+  sync_last_update                       BigInt?
+  table_column_configuration             String?       @db.Text
+  days_of_inventory                      BigInt?
+  u_last_cron_time                       BigInt?
+  u_status                               Int           @default(0)
+  u_cron_status                          Int           @default(0)
+  u_applied_coupon_code                  String?       @db.VarChar(100)
+  u_all_report_requested                 Int           @default(0)
+  u_error_message                        String?       @db.Text
+  default_sales_by_product_column        String?       @db.VarChar(255)
+  role                                   Role          @default(User)
+  account_type                           String?       @default("external") @db.VarChar(10)
+  manager_brands                         Brands[]
+  brands                                 UserBrand[]
+  permissions                            Permissions[]
+  walmart_tag                            walmart_tag[]
+}
+
+model Brands {
+  id                                     Int                               @id @default(autoincrement())
+  status                                 Brand_status                      @default(Pending)
+  name                                   String                            @db.VarChar(150)
+  u_amazon_seller_name                   String?                           @db.VarChar(200)
+  u_amazon_marketplace_name              String?                           @db.VarChar(100)
+  allowed_user_id                        String?                           @db.Text
+  u_cust_id                              String?                           @db.VarChar(150)
+  u_card_last_no                         Int?
+  access_token                           String?                           @db.Text
+  password_reset_token                   String?                           @db.VarChar(255)
+  auth_key                               String?                           @db.VarChar(255)
+  u_refunded                             Int?
+  u_canceled                             Int?
+  u_payment                              Int?                              @default(0)
+  u_mws_seller_id                        String?                           @db.VarChar(100)
+  u_mws_auth_token                       String?                           @db.VarChar(150)
+  u_mws_status                           Int?                              @default(1)
+  u_is_logged                            Int?                              @default(0)
+  u_is_auto_logout                       Int?                              @default(0)
+  u_aff_username                         String?                           @db.VarChar(100)
+  u_aff_password                         String?                           @db.VarChar(255)
+  u_affiliate_id                         String?                           @db.VarChar(100)
+  u_affiliate_status                     Int?
+  u_sub_plan                             String?                           @db.VarChar(100)
+  u_refer_date                           DateTime?                         @db.Date
+  db_name                                String?                           @db.VarChar(255)
+  u_db_server                            String?                           @db.VarChar(255)
+  u_db_username                          String?                           @db.VarChar(255)
+  u_db_password                          String?                           @db.VarChar(255)
+  u_enterprise_id                        Int?
+  u_first_google_sheet_name              String?                           @db.VarChar(100)
+  u_second_google_sheet_name             String?                           @db.VarChar(100)
+  u_first_google_sheet_id                String?                           @db.VarChar(200)
+  u_second_google_sheet_id               String?                           @db.VarChar(200)
+  amazon_advertising_access_token        String?                           @db.Text
+  amazon_advertising_refresh_token       String?                           @db.Text
+  amazon_advertising_token_type          String?                           @db.VarChar(100)
+  amazon_advertising_access_token_expiry BigInt?
+  amazon_advertising_profile_id          String?                           @db.Text
+  amazon_advertising_marketplace_id      String?                           @db.VarChar(50)
+  amazon_advertising_client_id           String?                           @db.Text
+  amazon_advertising_client_secret       String?                           @db.Text
+  amazon_advertising_return_url          String?                           @db.VarChar(255)
+  amazon_advertising_response            String?                           @db.Text
+  advertiserName                         String?                           @unique @db.VarChar(256)
+  rds_credential_id                      Int?
+  server_credential_id                   Int?
+  u_is_assigned                          Int?                              @default(0)
+  u_active_asin_count                    Int?
+  u_allowed_report_count                 Int?                              @default(0)
+  pending_reports                        Int?                              @default(0)
+  avg_order_per_day                      Int?                              @default(0)
+  avg_sku                                Int?                              @default(0)
+  business_report_is_done                Boolean?                          @default(false)
+  business_report_count                  Int?                              @default(0)
+  previous_business_report_dates         String?                           @db.Text
+  created_at                             BigInt?
+  updated_at                             BigInt?
+  created_by                             Int?
+  updated_by                             Int?
+  last_update                            BigInt?
+  syncing_data                           String?                           @db.VarChar(255)
+  sync_progress                          String?                           @db.VarChar(255)
+  sync_last_update                       BigInt?
+  table_column_configuration             String?                           @db.Text
+  days_of_inventory                      BigInt?
+  u_last_cron_time                       BigInt?
+  u_cron_status                          Int?                              @default(0)
+  u_applied_coupon_code                  String?                           @db.VarChar(100)
+  u_all_report_requested                 Int?                              @default(0)
+  u_error_message                        String?                           @db.Text
+  default_sales_by_product_column        String?                           @db.VarChar(255)
+  is_shipment_reports_active             Boolean                           @default(false)
+  vendo_contract_end_date                BigInt?
+  vendo_contract_start_date              BigInt?
+  subcategories_enabled                  Boolean                           @default(false)
+  account_manager_id                     Int?
+  brand_source                           String?                           @default("Amazon") @db.VarChar(10)
+  advertiser_id                          String?                           @db.VarChar(255)
+  AllBrandsSum                           AllBrandsSum[]
+  account_manager                        users?                            @relation(fields: [account_manager_id], references: [id])
+  Configuration                          Configuration[]
+  Forecast                               Forecast[]
+  users                                  UserBrand[]
+  central_report_log                     central_report_log[]
+  customer_acquisition_ltv               customer_acquisition_ltv[]
+  monthly_customer_acquistion            monthly_customer_acquistion[]
+  monthly_product_breakdown              monthly_product_breakdown[]
+  product_monthly_breakdown              product_monthly_breakdown[]
+  product_weekly_breakdown               product_weekly_breakdown[]
+  weekly_customer_acquistion             weekly_customer_acquistion[]
+  weekly_product_breakdown               weekly_product_breakdown[]
+  Categories                             BrandCategories[]                 @relation("BrandCategoriesToBrands")
+  categories                             categories[]
+  category_product_data                  category_product_data[]
+  dsp_data                               dsp_data[]
+  manual_dsp_data                        manual_dsp_data[]
+  walmart_campaign                       walmart_campaign[]
+  restock_data                           restock_data[]
+  walmart_tag                            walmart_tag[]
+  walmart_calendars                      walmart_calendar[]
+  walmart_refresh_token                  String?                           @db.VarChar(255)
+  walmart_seller_id                      String?                           @db.VarChar(255)
+  post_flat_file_fullfilment_data        post_flat_file_fullfilment_data[]
+  budgets                                budgets[]
+  inventory_management                   inventory_management[]
+  walmart_item_keyword                   walmart_item_keyword[]
+
+  @@index([account_manager_id], map: "Brands_account_manager_id_fkey")
+}
+
+model budgets {
+  id            Int          @id @default(autoincrement())
+  budget        Float
+  spend         Float        @default(0)
+  date          DateTime
+  status        status       @default(ACTIVE)
+  created_at    DateTime
+  updated_at    DateTime
+  walmart_tag   walmart_tag? @relation(fields: [walmart_tagId], references: [id], onDelete: NoAction)
+  walmart_tagId Int?
+  brand         Brands       @relation(fields: [brandId], references: [id], onDelete: NoAction)
+  brandId       Int
+  period_type   period_type  @default(DAILY)
+
+  @@unique([walmart_tagId, brandId, date, period_type], name: "budget_unique_key")
+  @@index([period_type], map: "budgets_period_type_index")
+}
+
+enum period_type {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+model walmart_calendar {
+  id            Int                       @id @default(autoincrement())
+  name          String                    @db.VarChar(512)
+  status        status                    @default(ACTIVE)
+  type          calendar_type             @default(CALENDAR)
+  created_at    DateTime
+  updated_at    DateTime
+  budget_change Float                     @default(0)
+  brands        Brands                    @relation(fields: [brandId], references: [id])
+  brandId       Int
+  walmart_tags  walmart_tag[]
+  periods       walmart_calendar_period[]
+}
+
+enum calendar_type {
+  CALENDAR
+  DAYPART
+}
+
+model walmart_calendar_period {
+  id            Int              @id @default(autoincrement())
+  start_date    DateTime
+  end_date      DateTime
+  budget_change Float            @default(0)
+  calendar      walmart_calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+  calendarId    Int
+  created_at    DateTime
+  updated_at    DateTime
+}
+
+model walmart_tag {
+  id                Int                @id @default(autoincrement())
+  name              String             @db.VarChar(512)
+  status            status             @default(ACTIVE) //
+  created_at        DateTime           @default(now())
+  updated_at        DateTime
+  budgets           budgets[]
+  brand             Brands             @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId           Int
+  owner             users              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id           Int
+  walmart_campaigns walmart_campaign[]
+  walmart_calendars walmart_calendar[]
+
+  @@unique([brandId, name], name: "walmart_tag_unique_key")
+}
+
+model walmart_campaign_stat {
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  spend       Float
+  impressions Int?
+  clicks      Int?
+
+  campaign    walmart_campaign @relation(fields: [campaign_id], references: [id], onDelete: NoAction)
+  campaign_id Int
+
+  @@unique([campaign_id, date])
+}
+
+model walmart_campaign {
+  id                    Int                     @id
+  spend                 Int                     @default(0)
+  name                  String                  @db.VarChar(512)
+  campaign_type         String?                 @db.VarChar(256)
+  targeting_type        String?                 @db.VarChar(256)
+  status                String?                 @db.VarChar(512)
+  budget_type           String?                 @db.VarChar(512)
+  start_date            DateTime
+  end_date              DateTime
+  total_budget          Float
+  daily_budget          Float
+  rollover              Boolean?
+  walmart_tags          walmart_tag[]
+  brand                 Brands                  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId               Int
+  walmart_campaign_stat walmart_campaign_stat[]
+}
+
+// future budgets are active
+// those get pass spending values get spended
+// those that are for past days are inactive
+enum status {
+  ACTIVE
+  PAUSED
+  INACTIVE
+}
+
+model categories {
+  id         Int     @id @default(autoincrement())
+  name       String? @db.VarChar(150)
+  code       String? @db.VarChar(100)
+  created_at BigInt?
+  updated_at BigInt?
+  deleted_at BigInt?
+  deleted_by Int?
+  status     Int     @default(0)
+  parent_id  Int?
+  brandId    Int?
+  brand      Brands? @relation(fields: [brandId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([parent_id])
+}
+
+model category_product_data {
+  id             Int     @id @default(autoincrement())
+  category       String? @db.VarChar(150)
+  asin           String? @db.VarChar(100)
+  sku            String? @db.VarChar(100)
+  product_title  String? @db.VarChar(250)
+  product_status String? @db.VarChar(50)
+  case_pack_size Int?
+  created_at     BigInt?
+  updated_at     BigInt?
+  deleted_at     BigInt?
+  deleted_by     Int?
+  status         Int     @default(0)
+  category_id    Int?
+  brandId        Int?
+  brand          Brands? @relation(fields: [brandId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([asin])
+}
+
+model product_monthly_breakdown {
+  id             Int     @id @default(autoincrement())
+  asin           String?
+  sku            String?
+  product_name   String  @db.VarChar(455)
+  unique_buyer   Int     @default(0)
+  returned_buyer Int     @default(0)
+  month          Int
+  year           Int
+  brandId        Int
+  brand          Brands  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([sku, brandId, month, year], name: "product_monthly_breakdown_product_name_brandId_month_year_key")
+  @@index([month, year], map: "month_year_idx")
+  @@index([asin, sku], map: "product_monthly_breakdown_asin_sku_product_name_idx")
+  @@index([brandId], map: "product_monthly_breakdown_brandId_fkey")
+}
+
+model product_weekly_breakdown {
+  id                  Int     @id @default(autoincrement())
+  week                Int
+  year                Int
+  unique_buyer        Int     @default(0)
+  returned_buyer      Int     @default(0)
+  brandId             Int
+  returned_buyer_sale Decimal @default(0.000) @db.Decimal(15, 3)
+  unique_buyer_sale   Decimal @default(0.000) @db.Decimal(15, 3)
+  brand               Brands  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([brandId, year, week], map: "weekly_breakdown_brand_yearweek_unique")
+  @@index([brandId, week, year], map: "product_weekly_breakdown_year_week_idx")
+}
+
+model weekly_customer_acquistion {
+  id                  Int     @id @default(autoincrement())
+  week                Int
+  year                Int
+  unique_buyer        Int     @default(0)
+  returned_buyer      Int     @default(0)
+  brandId             Int
+  returned_buyer_sale Decimal @default(0.000) @db.Decimal(15, 3)
+  unique_buyer_sale   Decimal @default(0.000) @db.Decimal(15, 3)
+  brand               Brands  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([brandId, year, week], name: "weekly_customer_acquistion_pk", map: "weekly_customer_acquistion_pk")
+  @@index([brandId, week, year], map: "weekly_customer_acquistion_year_week_idx")
+}
+
+model walmart_keyword {
+  id                           Int       @id @default(autoincrement())
+  brandId                      Int?
+  week                         Int?
+  year                         Int?
+  date                         DateTime? @db.Date
+  keywordId                    Int?
+  searchedKeyword              String?   @db.Text
+  biddedKeyword                String?   @db.Text
+  matchType                    String?   @db.VarChar(50)
+  campaignId                   Int?
+  adGroupId                    Int?
+  ntbUnits3days                Int?
+  ntbUnits14days               Int?
+  ntbUnits30days               Int?
+  ntbOrders3days               Int?
+  ntbOrders14days              Int?
+  ntbOrders30days              Int?
+  ntbRevenue3days              Decimal?  @default(0.000) @db.Decimal(15, 3)
+  ntbRevenue14days             Decimal?  @default(0.000) @db.Decimal(15, 3)
+  ntbRevenue30days             Decimal?  @default(0.000) @db.Decimal(15, 3)
+  bid                          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  numAdsShown                  Int?
+  numAdsClicks                 Int?
+  adSpend                      Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales3days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales14days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales30days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales3days      Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales14days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales30days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  attributedUnits3days         Int?
+  attributedUnits14days        Int?
+  attributedUnits30days        Int?
+  brandAttributedSales3days    Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales14days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales30days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales3days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales14days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales30days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales3days           Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales14days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales30days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  attributedOrders3days        Int?
+  attributedOrders14days       Int?
+  attributedOrders30days       Int?
+
+  @@index([adGroupId], map: "walmart_keyword_adGroupId_index")
+  @@index([brandId], map: "walmart_keyword_brand_idx")
+  @@index([campaignId], map: "walmart_keyword_campaignId_index")
+  @@index([date], map: "walmart_keyword_date_index")
+  @@index([keywordId], map: "walmart_keyword_keywordId_index")
+}
+
+model walmart_ad_item {
+  id                           Int       @id @default(autoincrement())
+  brandId                      Int?
+  date                         DateTime? @db.Date
+  campaignId                   Int?
+  adGroupId                    Int?
+  itemId                       Int?
+  itemName                     String?   @db.VarChar(50)
+  itemImage                    String?   @db.VarChar(300)
+  numAdsShown                  Int?
+  numAdsClicks                 Int?
+  adSpend                      Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales3days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales14days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales30days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales3days      Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales14days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales30days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  attributedUnits3days         Int?
+  attributedUnits14days        Int?
+  attributedUnits30days        Int?
+  attributedOrders3days        Int?
+  attributedOrders14days       Int?
+  attributedOrders30days       Int?
+  brandAttributedSales3days    Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales14days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales30days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales3days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales14days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales30days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales3days           Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales14days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales30days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+
+  @@index([brandId], map: "walmart_ad_item_brand_idx")
+  @@index([adGroupId], map: "walmart_ad_item_adGroupId_index")
+  @@index([campaignId], map: "walmart_ad_item_campaignId_index")
+  @@index([date], map: "walmart_ad_item_date_index")
+  @@index([itemId], map: "walmart_ad_item_itemId_index")
+}
+
+model walmart_ad_group {
+  id                           Int       @id @default(autoincrement())
+  brandId                      Int
+  date                         DateTime? @db.DateTime(0)
+  campaignId                   Int
+  adGroupId                    Int
+  ntbUnits3days                Int?
+  ntbOrders3days               Int?
+  ntbRevenue3days              Decimal?  @default(0.000) @db.Decimal(15, 3)
+  ntbUnits14days               Int?
+  ntbOrders14days              Int?
+  ntbRevenue14days             Decimal?  @default(0.000) @db.Decimal(15, 3)
+  ntbUnits30days               Int?
+  ntbOrders30days              Int?
+  ntbRevenue30days             Decimal?  @default(0.000) @db.Decimal(15, 3)
+  numAdsShown                  Int?
+  numAdsClicks                 Int?
+  adSpend                      Int?
+  directAttributedSales3days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales14days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales30days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  attributedUnits3days         Int?
+  attributedUnits14days        Int?
+  attributedUnits30days        Int?
+  brandAttributedSales3days    Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales14days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales3days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales14days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales30days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  attributedOrders3days        Int?
+  attributedOrders14days       Int?
+  attributedOrders30days       Int?
+
+  @@index([brandId], map: "walmart_ad_group_brand_idx")
+  @@index([adGroupId], map: "walmart_ad_group_adGroupId_index")
+  @@index([campaignId], map: "walmart_ad_group_campaignId_index")
+  @@index([date], map: "walmart_ad_group_date_index")
+}
+
+model monthly_customer_acquistion {
+  id                  Int     @id @default(autoincrement())
+  month               Int
+  year                Int
+  unique_buyer        Int     @default(0)
+  returned_buyer      Int     @default(0)
+  brandId             Int
+  returned_buyer_sale Decimal @default(0.000) @db.Decimal(15, 3)
+  unique_buyer_sale   Decimal @default(0.000) @db.Decimal(15, 3)
+  brand               Brands  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([brandId, year, month], name: "monthly_customer_acquistion_pk", map: "monthly_customer_acquistion_pk")
+  @@index([brandId, month, year], map: "monthly_customer_acquistion_year_month_idx")
+}
+
+model customer_acquisition_ltv {
+  id                           Int      @id @default(autoincrement())
+  month                        Int?
+  year                         Int?
+  subsequent_month             Int?
+  subsequent_year              Int?
+  returning_buyers             Int?
+  total_sales_returning_buyers Decimal? @db.Decimal(15, 2)
+  brandId                      Int
+  brand                        Brands   @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([month, year, subsequent_month, subsequent_year, brandId], name: "customer_acquisition_ltv_month_year_brandId", map: "customer_acquisition_ltv_month_year_brandId")
+  @@index([brandId], map: "customer_acquisition_ltv_brandId_fkey")
+}
+
+model monthly_product_breakdown {
+  id             Int     @id @default(autoincrement())
+  asin           String?
+  sku            String?
+  product_name   String  @db.VarChar(455)
+  unique_buyer   Int     @default(0)
+  returned_buyer Int     @default(0)
+  month          Int
+  year           Int
+  brandId        Int
+  brand          Brands  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([sku, brandId, month, year], name: "monthly_product_breakdown_product_name_brandId_month_year_key")
+  @@index([month, year], map: "month_year_idx")
+  @@index([asin, sku], map: "monthly_product_breakdown_asin_sku_product_name_idx")
+  @@index([brandId], map: "monthly_product_breakdown_brandId_fkey")
+}
+
+model weekly_product_breakdown {
+  id             Int     @id @default(autoincrement())
+  asin           String?
+  sku            String?
+  product_name   String  @db.VarChar(455)
+  unique_buyer   Int     @default(0)
+  returned_buyer Int     @default(0)
+  week           Int
+  year           Int
+  brandId        Int
+  brand          Brands  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([sku, brandId, week, year], name: "weekly_product_breakdown_product_name_brandId_week_year_key")
+  @@index([week, year], map: "week_year_idx")
+  @@index([asin, sku], map: "weekly_product_breakdown_asin_sku_product_name_idx")
+  @@index([brandId], map: "weekly_product_breakdown_brandId_fkey")
+}
+
+model BrandCategories {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(100)
+  brands Brands[] @relation("BrandCategoriesToBrands")
+}
+
+model Forecast {
+  id       Int     @id @default(autoincrement())
+  forecast Int?
+  adBudget Int?
+  month    Int
+  year     Int
+  brandsId Int?
+  Brands   Brands? @relation(fields: [brandsId], references: [id])
+
+  @@unique([month, year, brandsId], name: "month_year")
+  @@index([month], map: "idx-forecast-month")
+  @@index([month, year], map: "idx-forecast-month-year")
+  @@index([brandsId], map: "Forecast_brandsId_fkey")
+}
+
+model AllBrandsSum {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  year     Int
+  month    Int
+  week     Int
+  spend    Float?
+  revenue  Float?
+  sale     Float?
+  brandsId Int
+  Brands   Brands   @relation(fields: [brandsId], references: [id])
+
+  @@unique([date, brandsId], name: "date_brand")
+  @@index([date], map: "idx-allbrand-date")
+  @@index([week], map: "idx-allbrands-week")
+  @@index([month], map: "idx-allbrands-month")
+  @@index([date, brandsId], map: "idx-allbrand-date-brandId")
+  @@index([brandsId], map: "AllBrandsSum_brandsId_fkey")
+  @@index([date], map: "idx-allbrand-month")
+  @@index([date], map: "idx-allbrand-week")
+  @@index([date], map: "idx-allbrand-year")
+}
+
+model Configuration {
+  id      Int    @id @default(autoincrement())
+  key     String
+  value   String @db.Text
+  brandId Int
+  brand   Brands @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@index([brandId], map: "Configuration_brandId_fkey")
+}
+
+model UserBrand {
+  userId  Int
+  brandId Int
+  role    Role
+  brand   Brands @relation(fields: [brandId], references: [id])
+  user    users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([userId, brandId])
+  @@index([brandId], map: "UserBrand_brandId_fkey")
+}
+
+model Permissions {
+  id    Int     @id @default(autoincrement())
+  name  String
+  users users[]
+}
+
+model archived_inventory {
+  ai_id                          BigInt    @id @default(autoincrement())
+  usp_id                         Int?
+  ai_date                        DateTime? @db.Date
+  brand_id                       Int?
+  marketplace_id                 String?   @db.VarChar(100)
+  marketplace                    String?   @db.VarChar(100)
+  sku                            String?   @db.VarChar(255)
+  fnsku                          String?   @db.VarChar(255)
+  asin                           String?   @db.VarChar(255)
+  product_name                   String?   @db.Text
+  condition                      String?   @db.VarChar(255)
+  your_price                     String?   @db.VarChar(255)
+  mfn_listing_exists             String?   @db.VarChar(255)
+  mfn_fulfillable_quantity       Int?      @default(0)
+  afn_listing_exists             String?   @db.VarChar(255)
+  afn_warehouse_quantity         Int?      @default(0)
+  afn_fulfillable_quantity       Int?      @default(0)
+  afn_unsellable_quantity        Int?      @default(0)
+  afn_reserved_quantity          Int?      @default(0)
+  afn_total_quantity             Int?      @default(0)
+  per_unit_volume                String?   @db.VarChar(255)
+  afn_inbound_working_quantity   Int?      @default(0)
+  afn_inbound_shipped_quantity   Int?      @default(0)
+  afn_inbound_receiving_quantity Int?      @default(0)
+  afn_researching_quantity       Int?      @default(0)
+  afn_reserved_future_supply     Int?      @default(0)
+  afn_future_supply_buyable      Int?      @default(0)
+  created_at                     BigInt?
+  updated_at                     BigInt?
+  created_by                     Int?
+  updated_by                     Int?
+  user_id                        Int?
+}
+
+model crons_events_log {
+  cel_id         BigInt  @id @default(autoincrement())
+  cel_cron_name  String? @db.VarChar(255)
+  cel_cron_type  Int?
+  cel_event_type Int?
+  cel_message    String? @db.Text
+  cel_event_data String? @db.LongText
+  cel_start_time Int?
+  cel_end_time   Int?
+  cel_user_id    Int?
+  created_at     Int?
+  updated_at     Int?
+  created_by     Int?
+  updated_by     Int?
+  cel_status     Int     @default(0)
+}
+
+model financial_data {
+  id                       Int       @id @default(autoincrement())
+  brand_id                 Int?
+  usp_id                   Int?
+  marketplace_id           String?   @db.VarChar(100)
+  datetime_n               DateTime? @db.Date
+  date_time                String?   @db.VarChar(50)
+  settlement_id            String?   @db.VarChar(100)
+  type                     String?   @db.VarChar(100)
+  order_id                 String?   @db.VarChar(100)
+  sku                      String?   @db.VarChar(100)
+  description              String?   @db.Text
+  quantity                 Int?      @default(0)
+  marketplace              String?   @db.VarChar(100)
+  account_type             String?   @db.VarChar(100)
+  fulfillment              String?   @db.VarChar(100)
+  order_city               String?   @db.VarChar(100)
+  order_state              String?   @db.VarChar(100)
+  order_postal             String?   @db.VarChar(100)
+  tax_collection_model     String?   @db.VarChar(100)
+  product_sales            Float?    @default(0) @db.Float
+  product_sales_tax        Float?    @default(0) @db.Float
+  shipping_credits         Float?    @default(0) @db.Float
+  shipping_credits_tax     Float?    @default(0) @db.Float
+  gift_wrap_credits        Float?    @default(0) @db.Float
+  giftwrap_credits_tax     Float?    @default(0) @db.Float
+  promotional_rebates      Float?    @default(0) @db.Float
+  promotional_rebates_tax  Float?    @default(0) @db.Float
+  marketplace_withheld_tax Float?    @default(0) @db.Float
+  selling_fees             Float?    @default(0) @db.Float
+  fba_fees                 Float?    @default(0) @db.Float
+  other_transaction_fees   Float?    @default(0) @db.Float
+  other                    Float?    @default(0) @db.Float
+  total                    Float?    @default(0) @db.Float
+  created_at               BigInt?
+  updated_at               BigInt?
+
+  @@index([brand_id], map: "idx-financial_data-brand_id")
+  @@index([datetime_n], map: "idx-financial_data-datetime_n")
+  @@index([sku], map: "idx-financial_data-sku")
+}
+
+model get_amazon_fulfilled_shipments_data_general {
+  id                      Int     @id @default(autoincrement())
+  system_event_process_id Int?
+  brand_id                Int?
+  amazon_order_id         String? @db.VarChar(100)
+  merchant_order_id       String? @db.VarChar(100)
+  shipment_id             String? @db.VarChar(100)
+  shipment_item_id        String? @db.VarChar(100)
+  amazon_order_item_id    String? @db.VarChar(100)
+  merchant_order_item_id  String? @db.VarChar(100)
+  purchase_date           String? @db.VarChar(100)
+  payments_date           String? @db.VarChar(100)
+  shipment_date           String? @db.VarChar(100)
+  reporting_date          String? @db.VarChar(100)
+  buyer_email             String? @db.VarChar(100)
+  buyer_name              String? @db.VarChar(50)
+  buyer_phone_number      String? @db.VarChar(50)
+  sku                     String? @db.VarChar(100)
+  product_name            String? @db.Text
+  quantity_shipped        Int?
+  currency                String? @db.VarChar(10)
+  item_price              Float?  @default(0) @db.Float
+  item_tax                Float?  @default(0) @db.Float
+  shipping_price          Float?  @default(0) @db.Float
+  shipping_tax            Float?  @default(0) @db.Float
+  gift_wrap_price         Float?  @default(0) @db.Float
+  gift_wrap_tax           Float?  @default(0) @db.Float
+  ship_service_level      String? @db.VarChar(50)
+  recipient_name          String? @db.VarChar(100)
+  ship_address_1          String? @db.VarChar(255)
+  ship_address_2          String? @db.VarChar(255)
+  ship_address_3          String? @db.VarChar(255)
+  ship_city               String? @db.VarChar(50)
+  ship_state              String? @db.VarChar(50)
+  ship_postal_code        String? @db.VarChar(50)
+  ship_country            String? @db.VarChar(10)
+  ship_phone_number       String? @db.VarChar(20)
+  bill_address_1          String? @db.VarChar(255)
+  bill_address_2          String? @db.VarChar(255)
+  bill_address_3          String? @db.VarChar(255)
+  bill_city               String? @db.VarChar(50)
+  bill_state              String? @db.VarChar(50)
+  bill_postal_code        String? @db.VarChar(10)
+  bill_country            String? @db.VarChar(50)
+  item_promotion_discount Float?  @default(0) @db.Float
+  ship_promotion_discount Float?  @default(0) @db.Float
+  carrier                 String? @db.VarChar(20)
+  tracking_number         String? @db.VarChar(100)
+  estimated_arrival_date  String? @db.VarChar(100)
+  fulfillment_center_id   String? @db.VarChar(50)
+  fulfillment_channel     String? @db.VarChar(50)
+  sales_channel           String? @db.VarChar(50)
+  marketplace_id          String? @db.VarChar(50)
+  marketplace             String? @db.VarChar(50)
+  created_at              BigInt?
+  updated_at              BigInt?
+  created_by              Int?
+  updated_by              Int?
+  user_id                 Int?
+  usp_id                  Int?
+  status                  Int?    @default(0)
+
+  @@index([amazon_order_id], map: "idx-shipments_data_general-amazon_order_id")
+  @@index([brand_id], map: "idx-shipments_data_general-brand_id")
+  @@index([sku], map: "idx-shipments_data_general-sku")
+}
+
+model get_fba_estimated_fba_fees_txt_data {
+  id                                     Int     @id @default(autoincrement())
+  system_event_process_id                Int?
+  brand_id                               Int?
+  sku                                    String? @db.VarChar(50)
+  fnsku                                  String? @db.VarChar(50)
+  asin                                   String? @db.VarChar(50)
+  product_name                           String? @db.Text
+  product_group                          String? @db.VarChar(100)
+  brand                                  String? @db.VarChar(100)
+  fulfilled_by                           String? @db.VarChar(50)
+  your_price                             Float?  @default(0) @db.Float
+  sales_price                            Float?  @default(0) @db.Float
+  longest_side                           Float?  @default(0) @db.Float
+  median_side                            Float?  @default(0) @db.Float
+  shortest_side                          Float?  @default(0) @db.Float
+  length_and_girth                       Float?  @default(0) @db.Float
+  unit_of_dimension                      Float?  @default(0) @db.Float
+  item_package_weight                    Float?  @default(0) @db.Float
+  unit_of_weight                         String? @db.VarChar(30)
+  product_size_tier                      String? @db.VarChar(30)
+  currency                               String? @db.VarChar(10)
+  estimated_fee_total                    Float?  @default(0) @db.Float
+  estimated_referral_fee_per_unit        Float?  @default(0) @db.Float
+  estimated_variable_closing_fee         Float?  @default(0) @db.Float
+  estimated_order_handling_fee_per_order String? @db.VarChar(30)
+  estimated_pick_pack_fee_per_unit       String? @db.VarChar(30)
+  estimated_weight_handling_fee_per_unit String? @db.VarChar(30)
+  expected_fulfillment_fee_per_unit      Float?  @default(0) @db.Float
+  marketplace_id                         String? @db.VarChar(100)
+  marketplace                            String? @db.VarChar(100)
+  created_at                             BigInt?
+  updated_at                             BigInt?
+  created_by                             Int?
+  updated_by                             Int?
+  user_id                                Int?
+  usp_id                                 Int?
+  status                                 Int?    @default(0)
+
+  @@index([asin], map: "idx-fba_fees_txt-asin")
+  @@index([brand_id], map: "idx-fba_fees_txt-brand_id")
+  @@index([sku], map: "idx-fba_fees_txt-sku")
+}
+
+model get_fba_fulfillment_current_inventory_data {
+  id                      Int     @id @default(autoincrement())
+  system_event_process_id Int?
+  brand_id                Int?
+  shipment_date           String? @db.VarChar(50)
+  fnsku                   String? @db.VarChar(50)
+  sku                     String? @db.VarChar(50)
+  product_name            String? @db.Text
+  quantity                Int?    @default(0)
+  fulfillment_center_id   String? @db.VarChar(50)
+  detailed_disposition    String? @db.VarChar(100)
+  country                 String? @db.VarChar(30)
+  marketplace_id          String? @db.VarChar(100)
+  marketplace             String? @db.VarChar(100)
+  created_at              BigInt?
+  updated_at              BigInt?
+  created_by              Int?
+  updated_by              Int?
+  user_id                 Int?
+  usp_id                  Int?
+  status                  Int?    @default(0)
+
+  @@index([brand_id], map: "idx-current_inventory-brand_id")
+  @@index([sku], map: "idx-current_inventory-sku")
+}
+
+model get_flat_file_open_listings_data {
+  id                        Int     @id @default(autoincrement())
+  system_event_process_id   Int?
+  brand_id                  Int?
+  sku                       String? @db.VarChar(100)
+  asin                      String? @db.VarChar(100)
+  price                     Float?  @default(0) @db.Float
+  quantity                  Int?
+  business_price            Float?  @default(0) @db.Float
+  quantity_price_type       String? @db.VarChar(50)
+  quantity_lower_bound_1    Float?  @default(0) @db.Float
+  quantity_price_1          Float?  @default(0) @db.Float
+  quantity_lower_bound_2    Float?  @default(0) @db.Float
+  quantity_price_2          Float?  @default(0) @db.Float
+  quantity_lower_bound_3    Float?  @default(0) @db.Float
+  quantity_price_3          Float?  @default(0) @db.Float
+  quantity_lower_bound_4    Float?  @default(0) @db.Float
+  quantity_price_4          Float?  @default(0) @db.Float
+  quantity_lower_bound_5    Int?    @default(0)
+  quantity_price_5          Float?  @default(0) @db.Float
+  progressive_price_type    String? @db.VarChar(50)
+  progressive_lower_bound_1 Float?  @default(0) @db.Float
+  progressive_price_1       Float?  @default(0) @db.Float
+  progressive_lower_bound_2 Float?  @default(0) @db.Float
+  progressive_price_2       Float?  @default(0) @db.Float
+  progressive_lower_bound_3 Float?  @default(0) @db.Float
+  progressive_price_3       Float?  @default(0) @db.Float
+  marketplace_id            String? @db.VarChar(100)
+  marketplace               String? @db.VarChar(100)
+  created_at                BigInt?
+  updated_at                BigInt?
+  created_by                Int?
+  updated_by                Int?
+  user_id                   Int?
+  usp_id                    Int?
+  status                    Int?    @default(0)
+
+  @@index([asin], map: "idx-open_listings-asin")
+  @@index([brand_id], map: "idx-open_listings-brand_id")
+  @@index([sku], map: "idx-open_listings-sku")
+}
+
+model get_xml_all_orders_data_by_last_update_general {
+  id                      Int     @id @default(autoincrement())
+  system_event_process_id Int?
+  brand_id                Int?
+  amazon_order_id         String? @db.VarChar(100)
+  merchant_order_id       String? @db.VarChar(100)
+  purchase_date           String? @db.VarChar(100)
+  last_updated_date       String? @db.VarChar(100)
+  order_status            String? @db.VarChar(20)
+  fulfillment_channel     String? @db.VarChar(20)
+  sales_channel           String? @db.VarChar(50)
+  ship_service_level      String? @db.VarChar(50)
+  city                    String? @db.VarChar(50)
+  state                   String? @db.VarChar(50)
+  postal_code             String? @db.VarChar(50)
+  country                 String? @db.VarChar(50)
+  is_business_order       String? @db.VarChar(50)
+  amazon_order_item_id    String? @db.VarChar(100)
+  sku                     String? @db.VarChar(100)
+  asin                    String? @db.VarChar(100)
+  item_status             String? @db.VarChar(50)
+  product_name            String? @db.Text
+  quantity                Int?
+  type                    String? @db.VarChar(255)
+  amount                  Float?  @default(0) @db.Float
+  marketplace_id          String? @db.VarChar(100)
+  marketplace             String? @db.VarChar(100)
+  created_at              BigInt?
+  updated_at              BigInt?
+  created_by              Int?
+  updated_by              Int?
+  user_id                 Int?
+  usp_id                  Int?
+  status                  Int?    @default(0)
+
+  @@index([amazon_order_id], map: "idx-update_general-amazon_order_id")
+  @@index([brand_id], map: "idx-update_general-brand_id")
+  @@index([sku], map: "idx-update_general-sku")
+}
+
+model get_xml_all_orders_data_by_order_date_general {
+  id                      Int     @id @default(autoincrement())
+  system_event_process_id Int?
+  brand_id                Int?
+  amazon_order_id         String? @db.VarChar(100)
+  merchant_order_id       String? @db.VarChar(100)
+  purchase_date           String? @db.VarChar(100)
+  last_updated_date       String? @db.VarChar(100)
+  order_status            String? @db.VarChar(20)
+  fulfillment_channel     String? @db.VarChar(20)
+  sales_channel           String? @db.VarChar(50)
+  ship_service_level      String? @db.VarChar(50)
+  city                    String? @db.VarChar(50)
+  state                   String? @db.VarChar(50)
+  postal_code             String? @db.VarChar(50)
+  country                 String? @db.VarChar(50)
+  is_business_order       String? @db.VarChar(50)
+  amazon_order_item_id    String? @db.VarChar(100)
+  sku                     String? @db.VarChar(100)
+  asin                    String? @db.VarChar(100)
+  item_status             String? @db.VarChar(50)
+  product_name            String? @db.Text
+  quantity                Int?
+  type                    String? @db.VarChar(300)
+  amount                  Float?  @default(0) @db.Float
+  marketplace_id          String? @db.VarChar(100)
+  marketplace             String? @db.VarChar(100)
+  created_at              BigInt?
+  updated_at              BigInt?
+  created_by              Int?
+  updated_by              Int?
+  user_id                 Int?
+  usp_id                  Int?
+  status                  Int?    @default(0)
+
+  @@index([amazon_order_id], map: "idx-date_general-amazon_order_id")
+  @@index([brand_id], map: "idx-date_general-brand_id")
+  @@index([sku], map: "idx-date_general-sku")
+}
+
+model menu {
+  id             Int     @id @default(autoincrement())
+  parent_menu_id Int?
+  title          String? @db.VarChar(255)
+  is_main        Int?    @db.TinyInt
+  menu           menu?   @relation("menuTomenu", fields: [parent_menu_id], references: [id], onDelete: Cascade, map: "FK_submenu_id")
+  other_menu     menu[]  @relation("menuTomenu")
+
+  @@index([parent_menu_id], map: "FK_submenu_id")
+}
+
+model migration {
+  version    String @id @db.VarChar(180)
+  apply_time Int?
+}
+
+model order_report_data {
+  ord_id                               BigInt    @id @default(autoincrement())
+  usp_id                               Int?
+  amazon_order_id                      String?   @db.VarChar(50)
+  merchant_order_id                    String?   @db.VarChar(50)
+  purchase_date                        String?   @db.VarChar(50)
+  brand_id                             Int?
+  order_report_date                    String?   @db.VarChar(50)
+  last_updated_date                    String?   @db.VarChar(50)
+  order_status                         String?   @db.VarChar(20)
+  fulfillment_channel                  String?   @db.VarChar(20)
+  sales_channel                        String?   @db.VarChar(20)
+  order_channel                        String?   @db.VarChar(20)
+  url                                  String?   @db.VarChar(100)
+  ship_service_level                   String?   @db.VarChar(20)
+  product_name                         String?   @db.VarChar(255)
+  sku                                  String?   @db.VarChar(50)
+  asin                                 String?   @db.VarChar(50)
+  item_status                          String?   @db.VarChar(20)
+  quantity                             Int?      @default(0)
+  currency                             String?   @db.VarChar(15)
+  item_cog                             Float     @default(0.00) @db.Float
+  item_price                           Float?    @default(0.00) @db.Float
+  item_tax                             Float?    @default(0.00) @db.Float
+  shipping_price                       Float?    @default(0.00) @db.Float
+  shipping_tax                         Float?    @default(0.00) @db.Float
+  gift_wrap_price                      Float?    @default(0.00) @db.Float
+  gift_wrap_tax                        Float?    @default(0.00) @db.Float
+  item_promotion_discount              Float?    @default(0.00) @db.Float
+  ship_promotion_discount              Float?    @default(0.00) @db.Float
+  ship_city                            String?   @db.VarChar(50)
+  ship_state                           String?   @db.VarChar(50)
+  ship_postal_code                     String?   @db.VarChar(20)
+  ship_country                         String?   @db.VarChar(10)
+  promotion_ids                        String?   @db.VarChar(255)
+  is_business_order                    String?   @db.VarChar(20)
+  purchase_order_number                String?   @db.VarChar(50)
+  price_designation                    String?   @db.VarChar(100)
+  principle_charge_amount              Float?    @default(0.00) @db.Float
+  tax_charge_amount                    Float?    @default(0.00) @db.Float
+  gift_wrap_charge_amount              Float?    @default(0.00) @db.Float
+  gift_wrap_tax_charge_amount          Float?    @default(0.00) @db.Float
+  shipping_charge_amount               Float?    @default(0.00) @db.Float
+  shipping_tax_charge_amount           Float?    @default(0.00) @db.Float
+  fba_per_order_fulfillment_fee_amount Float?    @default(0.00) @db.Float
+  fba_per_unit_fulfillment_fee_amount  Float?    @default(0.00) @db.Float
+  fba_weight_based_fee_amount          Float?    @default(0.00) @db.Float
+  commission_fee_amount                Float?    @default(0.00) @db.Float
+  fixed_closing_fee_amount             Float?    @default(0.00) @db.Float
+  giftwrap_chargeback_fee_amount       Float?    @default(0.00) @db.Float
+  sales_tax_collect_fee_amount         Float?    @default(0.00) @db.Float
+  shipping_chargeback_fee_amount       Float?    @default(0.00) @db.Float
+  variable_closing_fee_amount          Float?    @default(0.00) @db.Float
+  marketplace_id                       String?   @db.VarChar(100)
+  marketplace                          String?   @db.VarChar(100)
+  ord_date                             DateTime? @db.Date
+  order_total                          Float?    @db.Float
+  number_of_items_shipped              Int?      @default(0)
+  number_of_items_unshipped            Int?      @default(0)
+  payment_execution_detail             String?   @db.VarChar(255)
+  payment_method                       String?   @db.VarChar(100)
+  shipment_service_level_category      String?   @db.VarChar(100)
+  easy_ship_shipment_status            String?   @db.VarChar(255)
+  cba_displayable_shipping_label       String?   @db.VarChar(255)
+  order_type                           String?   @db.VarChar(100)
+  earliest_ship_date                   String?   @db.VarChar(100)
+  latest_ship_date                     String?   @db.VarChar(100)
+  earliest_delivery_date               String?   @db.VarChar(100)
+  latest_delivery_date                 String?   @db.VarChar(100)
+  is_prime                             String?   @db.VarChar(100)
+  is_premium_order                     String?   @db.VarChar(100)
+  is_global_express_enabled            String?   @db.VarChar(100)
+  replaced_order_id                    String?   @db.VarChar(255)
+  is_replacement_order                 String?   @db.VarChar(100)
+  promise_response_due_date            String?   @db.VarChar(100)
+  is_estimated_ship_date_set           String?   @db.VarChar(100)
+  is_sold_by_ab                        String?   @db.VarChar(255)
+  assigned_ship_from_location_address  String?   @db.VarChar(255)
+  fulfillment_instruction              String?   @db.VarChar(255)
+  updated_by                           Int?
+  created_by                           Int?
+  created_at                           BigInt?
+  updated_at                           BigInt?
+  user_id                              Int?
+  ord_status                           Int?
+
+  @@index([amazon_order_id], map: "amazon_order_id")
+  @@index([order_status], map: "order_status")
+  @@index([sku], map: "sku")
+}
+
+model product_report_data {
+  prd_id                     BigInt    @id @default(autoincrement())
+  usp_id                     Int?
+  prd_date                   DateTime? @db.Date
+  brand_id                   Int?
+  item_name                  String?   @db.Text
+  item_description           String?   @db.Text
+  status                     String?   @db.VarChar(50)
+  listing_id                 String?   @db.VarChar(100)
+  seller_sku                 String?   @db.VarChar(100)
+  price                      Float?    @db.Float
+  quantity                   Int?
+  open_date                  String?   @db.VarChar(100)
+  image_url                  String?   @db.VarChar(255)
+  item_is_marketplace        String?   @db.VarChar(255)
+  product_id_type            String?   @db.VarChar(255)
+  zshop_shipping_fee         String?   @db.VarChar(255)
+  item_note                  String?   @db.VarChar(255)
+  item_condition             String?   @db.VarChar(255)
+  zshop_category1            String?   @db.VarChar(255)
+  zshop_browse_path          String?   @db.VarChar(255)
+  zshop_storefront_feature   String?   @db.VarChar(255)
+  asin1                      String?   @db.VarChar(100)
+  asin2                      String?   @db.VarChar(100)
+  asin3                      String?   @db.VarChar(100)
+  will_ship_internationally  String?   @db.VarChar(255)
+  expedited_shipping         String?   @db.VarChar(255)
+  zshop_boldface             String?   @db.VarChar(255)
+  product_id                 String?   @db.VarChar(255)
+  bid_for_featured_placement String?   @db.VarChar(255)
+  add_delete                 String?   @db.VarChar(255)
+  pending_quantity           String?   @db.VarChar(255)
+  fulfillment_channel        String?   @db.VarChar(255)
+  merchant_shipping_group    String?   @db.VarChar(255)
+  marketplace_id             String?   @db.VarChar(100)
+  marketplace                String?   @db.VarChar(100)
+  created_at                 BigInt?
+  updated_at                 BigInt?
+  created_by                 Int?
+  updated_by                 Int?
+  user_id                    Int?
+}
+
+model rds_credentials {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  size       String?  @db.VarChar(255)
+  hostname   String   @db.VarChar(255)
+  username   String   @db.VarChar(255)
+  password   String   @db.VarChar(255)
+  is_default Boolean? @default(false)
+  created_at BigInt?
+  updated_at BigInt?
+}
+
+model regions {
+  id              Int     @id @default(autoincrement())
+  region_name     String? @db.VarChar(100)
+  aws_access_key  String? @db.VarChar(255)
+  aws_secret_key  String? @db.VarChar(255)
+  region_endpoint String? @db.VarChar(255)
+  created_at      BigInt?
+  updated_at      BigInt?
+  created_by      Int?
+  updated_by      Int?
+  r_status        Int?    @default(0)
+}
+
+model report_log {
+  id                    BigInt  @id @default(autoincrement())
+  report_type           String? @db.VarChar(200)
+  report_document_id    String? @db.VarChar(255)
+  report_id             String? @db.VarChar(200)
+  report_schedule_id    Int?
+  processing_status     String? @db.VarChar(200)
+  report_current_status String? @db.VarChar(200)
+  data_start_time       String? @db.VarChar(200)
+  data_end_time         String? @db.VarChar(200)
+  processing_start_time String? @db.VarChar(200)
+  processing_end_time   String? @db.VarChar(200)
+  is_done               Int     @default(0)
+  marketplace_id        String? @db.VarChar(100)
+  marketplace           String? @db.VarChar(100)
+  created_time          String? @db.VarChar(200)
+  report_request_status Int     @default(0)
+  created_at            BigInt?
+  updated_at            BigInt?
+  created_by            Int?
+  updated_by            Int?
+  status                Int     @default(0)
+
+  @@index([report_id], map: "report_id")
+  @@index([report_type], map: "report_type")
+}
+
+model returns_report_data {
+  rrd_id                  BigInt    @id @default(autoincrement())
+  usp_id                  Int?
+  return_date             String?   @db.VarChar(255)
+  order_id                String?   @db.VarChar(255)
+  brand_id                Int?
+  sku                     String?   @db.VarChar(255)
+  asin                    String?   @db.VarChar(100)
+  fnsku                   String?   @db.VarChar(255)
+  item_cog                Float?    @default(0.00) @db.Float
+  refunded_amount         Float?    @db.Float
+  refunded_tax_amount     Float?    @default(0.00) @db.Float
+  refunded_fba_fees       Float?    @default(0.00) @db.Float
+  refunded_comission_fees Float?    @default(0.00) @db.Float
+  product_name            String?   @db.VarChar(255)
+  quantity                Int?      @default(0)
+  fulfillment_center_id   String?   @db.VarChar(255)
+  detailed_disposition    String?   @db.VarChar(255)
+  reason                  String?   @db.VarChar(255)
+  status                  String?   @db.VarChar(255)
+  license_plate_number    String?   @db.VarChar(255)
+  customer_comments       String?   @db.VarChar(255)
+  return_formated_date    DateTime? @db.Date
+  marketplace_id          String?   @db.VarChar(100)
+  marketplace             String?   @db.VarChar(100)
+  is_refund_updated       Int?      @default(0) @db.TinyInt
+  created_at              BigInt?
+  updated_at              BigInt?
+  created_by              Int?
+  updated_by              Int?
+  user_id                 Int?
+
+  @@index([order_id], map: "order_id")
+  @@index([return_date], map: "return_date")
+}
+
+model server_credentials {
+  id                Int      @id @default(autoincrement())
+  name              String   @db.VarChar(255)
+  ip_address        String?  @db.VarChar(255)
+  public_ip_address String?  @db.VarChar(255)
+  instance_type     String?  @db.VarChar(255)
+  platform          String?  @db.VarChar(255)
+  is_default        Boolean? @default(false)
+  created_at        BigInt?
+  updated_at        BigInt?
+}
+
+model sidebar_menu {
+  id                 Int            @id @default(autoincrement())
+  parent_menu_id     Int?
+  title              String?        @db.VarChar(255)
+  is_main            Boolean?
+  sidebar_menu       sidebar_menu?  @relation("sidebar_menuTosidebar_menu", fields: [parent_menu_id], references: [id], onDelete: Cascade, map: "sidebar_menu_ibfk_1")
+  other_sidebar_menu sidebar_menu[] @relation("sidebar_menuTosidebar_menu")
+
+  @@index([parent_menu_id], map: "parent_menu_id")
+}
+
+model system_event_processes {
+  id                     Int       @id @default(autoincrement())
+  user_data_scheduler_id Int?
+  event_date             DateTime? @db.Date
+  event_name             String?   @db.VarChar(255)
+  event_type             String?   @db.VarChar(255)
+  event_status           String?   @db.VarChar(255)
+  event_details          String?   @db.Text
+  priority               Int?
+  retry_count            Int?      @default(0)
+  is_dependent           Int?
+  execution_time         String?   @db.VarChar(50)
+  marketplace            String?   @db.VarChar(100)
+  marketplace_id         String?   @db.VarChar(100)
+  status                 Int?      @default(0)
+  note                   String?   @db.Text
+  created_at             BigInt?
+  updated_at             BigInt?
+
+  @@index([event_date], map: "idx-system_event_processes-event_date")
+  @@index([event_name], map: "idx-system_event_processes-event_name")
+  @@index([event_type], map: "idx-system_event_processes-event_type")
+}
+
+model system_events_log {
+  id            Int     @id @default(autoincrement())
+  user_id       Int?
+  event_name    String? @db.VarChar(255)
+  event_type    String? @db.VarChar(255)
+  error_code    String? @db.VarChar(50)
+  error_message String? @db.VarChar(255)
+  error_data    String? @db.Text
+  ip_address    String? @db.VarChar(20)
+  url           String? @db.VarChar(255)
+  created_at    BigInt?
+  updated_at    BigInt?
+
+  @@index([user_id], map: "idx-system_events_log-user_id")
+}
+
+model system_events_log_old {
+  sel_id         BigInt  @id @default(autoincrement())
+  sel_type       Int?
+  sel_data       String? @db.LongText
+  sel_short_data String? @db.VarChar(250)
+  sel_message    String? @db.Text
+  sel_url        String? @db.Text
+  sel_ip         String? @db.VarChar(100)
+  sel_user_id    Int?
+  created_at     BigInt?
+  updated_at     BigInt?
+  created_by     Int?
+  updated_by     Int?
+  sel_status     Int     @default(0)
+}
+
+model user_advertising_credentials {
+  uac_id                   Int     @id @default(autoincrement())
+  uac_user_id              Int?
+  uac_seller_id            String? @db.VarChar(255)
+  uac_marketplace_id       String? @db.VarChar(255)
+  uac_usp_id               Int?
+  uac_profile_id           String? @db.VarChar(255)
+  uac_country_code         String? @db.VarChar(255)
+  uac_currency_code        String? @db.VarChar(255)
+  uac_daily_budget         String? @db.VarChar(255)
+  uac_time_zone            String? @db.VarChar(255)
+  uac_client_id            String? @db.Text
+  uac_client_secret        String? @db.Text
+  uac_return_url           String? @db.VarChar(255)
+  uac_access_token         String? @db.Text
+  uac_refresh_token        String? @db.Text
+  uac_token_type           String? @db.VarChar(255)
+  uac_region               String? @db.VarChar(50)
+  uac_access_token_exprity String? @db.VarChar(255)
+  uac_advertising_response String? @db.Text
+  created_at               Int?
+  updated_at               Int?
+  created_by               Int?
+  updated_by               Int?
+  uac_status               Int?    @default(0)
+}
+
+model user_mws_credentials {
+  um_id                Int     @id @default(autoincrement())
+  umc_user_id          Int
+  um_marketplace_name  String  @db.VarChar(255)
+  um_marketplace_id    String  @db.VarChar(100)
+  um_service_url       String? @db.Text
+  um_seller_id         String  @db.Text
+  um_mws_auth_token    String  @db.Text
+  um_aws_access_key_id String? @db.Text
+  um_secret_key        String? @db.Text
+  created_at           BigInt?
+  updated_at           BigInt?
+  created_by           Int?
+  updated_by           Int?
+  um_status            Int     @default(0)
+
+  @@index([umc_user_id], map: "umc_user_id")
+}
+
+model user_sp_credentials {
+  usp_id               Int     @id @default(autoincrement())
+  usp_user_id          Int
+  usp_marketplace_name String  @db.VarChar(255)
+  usp_marketplace_id   String  @db.VarChar(100)
+  seller_account_name  String? @db.VarChar(150)
+  region_id            Int?
+  usp_region           String? @db.VarChar(255)
+  usp_refresh_token    String  @db.Text
+  usp_client_id        String? @db.VarChar(255)
+  usp_client_secret    String? @db.VarChar(255)
+  usp_access_key       String? @db.VarChar(255)
+  usp_secret_key       String? @db.VarChar(255)
+  usp_role_arn         String? @db.VarChar(255)
+  usp_country_code     String? @db.VarChar(10)
+  usp_currency_code    String? @db.VarChar(10)
+  usp_domain_name      String? @db.VarChar(100)
+  created_at           BigInt?
+  updated_at           BigInt?
+  created_by           Int?
+  updated_by           Int?
+  usp_status           Int     @default(0)
+
+  @@index([usp_user_id], map: "usp_user_id")
+}
+
+model central_report_log {
+  id              BigInt   @id @default(autoincrement())
+  brand_id        Int
+  report_id       String?  @db.VarChar(200)
+  data_start_time String?  @db.VarChar(200)
+  data_end_time   String?  @db.VarChar(200)
+  report_type     String   @db.VarChar(512)
+  created_at      DateTime @db.DateTime(0)
+  updated_at      DateTime @db.DateTime(0)
+  file_url        String?  @db.Text
+  status          String   @db.VarChar(256)
+  error           String?  @db.Text
+  Brands          Brands   @relation(fields: [brand_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "central_report_log_Brands_id_fk")
+
+  @@index([brand_id], map: "central_report_log_Brands_id_fk")
+  @@index([created_at], map: "central_report_log_created_at_index")
+  @@index([report_type], map: "central_report_log_report_type_index")
+  @@index([status], map: "central_report_log_status_index")
+}
+
+model dsp_data {
+  id                                          Int       @id @default(autoincrement())
+  brand                                       Brands    @relation(fields: [brandsId], references: [id])
+  brandsId                                    Int
+  viewabilityRate                             Float?
+  checkoutValueSum                            Int?
+  checkoutViews                               Int?
+  orderBudget                                 Float?
+  unitsSold                                   Int?
+  otherClicks                                 Int?
+  paidSubscriptionSignupViews                 Int?
+  skillInvocationRate                         Int?
+  totalNewToBrandPurchasesClicks              Int?
+  mobileAppFirstStarts                        Int?
+  paidSubscriptionSignupClicks                Int?
+  newToBrandDetailPageViewClicks              Int?
+  mobileAppFirstStartCVR                      Int?
+  skillInvocationClicks                       Int?
+  mobileAppFirstStartClicks                   Int?
+  pageViewValueAverage                        Float?
+  threePFeeComScoreAbsorbed                   Float?
+  offAmazonERPM                               Float?
+  grossImpressions                            Int?
+  invalidImpressions                          Int?
+  newToBrandDetailPageViewRate                Float?
+  totalECPDetailPageView                      Float?
+  offAmazonCPA                                Float?
+  playTrailersClicks                          Int?
+  clickThroughRate                            Float?
+  contactValueAverage                         Float?
+  offAmazonROAS                               Float?
+  totalECPAddToList                           Float?
+  omnichannelMetricsFee                       Float?
+  eCPPaidSubscriptionSignup                   Float?
+  checkoutValueAverage                        Float?
+  totalPurchaseRate                           Float?
+  totalUnitsSold                              Int?
+  totalNewToBrandECPDetailPageView            Float?
+  totalAddToListViews                         Int?
+  videoDownloadsClicks                        Int?
+  totalProductReviewPageVisits                Int?
+  rentalRate                                  Int?
+  audioAdMidpoint                             Int?
+  threePFees                                  Float?
+  appStoreOpens                               Int?
+  totalProductReviewPageVisitsClicks          Int?
+  newToBrandECPDetailPageView                 Float?
+  checkoutClicks                              Int?
+  downloadedVideoPlays                        Int?
+  contactCVR                                  Int?
+  audioAdUnmute                               Int?
+  subscribeClicks                             Int?
+  proposalId                                  Float?
+  audioAdFirstQuartile                        Int?
+  measurableImpressions                       Int?
+  search                                      Int?
+  notificationOpens                           Int?
+  otherCPA                                    Float?
+  subscriptionSignupRate                      Int?
+  threePPreBidFee                             Float?
+  totalNewToBrandPurchasesPercentage          Float?
+  threePFeeAutomotiveAbsorbed                 Float?
+  videoAdThirdQuartile                        Int?
+  threePFeeCPM1Absorbed                       Float?
+  orderName                                   String?
+  totalPurchasesClicks                        Int?
+  freeTrialSubscriptionSignupRate             Int?
+  impressionFrequencyAverage                  Float?
+  subscribeCPA                                Float?
+  applicationValueAverage                     Float?
+  leadCPA                                     Float?
+  pageViewCVR                                 Int?
+  householdFrequencyAverage                   Float?
+  searchCVR                                   Int?
+  addToShoppingCartClicks                     Int?
+  eCPAppStoreFirstOpens                       Float?
+  appStoreFirstOpensViews                     Int?
+  applicationClicks                           Int?
+  signUpCPA                                   Float?
+  videoAdMidpoint                             Int?
+  audioAdRewind                               Int?
+  addToWatchlistRate                          Int?
+  intervalEnd                                 String?
+  eCPAddToCart                                Float?
+  videoAdUnmute                               Int?
+  newToBrandDetailPageViews                   Int?
+  videoAdCompletionRate                       Float?
+  skillInvocationViews                        Int?
+  addToListClicks                             Int?
+  audioAdCompanionBannerViews                 Int?
+  audioAdCompletionRate                       Float?
+  newToBrandERPM                              Float?
+  eCPAddToList                                Float?
+  combinedPurchasesViews                      Int?
+  totalPurchasesViews                         Int?
+  threePFeeComScore                           Float?
+  productReviewPageVisitsViews                Int?
+  videoDownloadsViews                         Int?
+  invalidClickThroughs                        Int?
+  detailPageViewRate                          Float?
+  detailPageViewClicks                        Int?
+  contact                                     Int?
+  searchValueSum                              Int?
+  totalAddToList                              Int?
+  offAmazonPurchases                          Int?
+  checkoutCVR                                 Int?
+  audioAdThirdQuartile                        Int?
+  addToListViews                              Int?
+  threePFeeDoubleVerifyAbsorbed               Float?
+  totalNewToBrandDPVs                         Int?
+  purchases                                   Int?
+  threePFeeCPM2Absorbed                       Float?
+  addToWatchlistViews                         Int?
+  appStoreFirstOpensClicks                    Int?
+  eCPVideoDownload                            Float?
+  pageViewCPA                                 Float?
+  paidSubscriptionSignups                     Int?
+  orderExternalId                             Float?
+  eCPAudioAdCompletion                        Float?
+  totalProductReviewPageVisitsViews           Int?
+  videoAdReplays                              Int?
+  totalPurchases                              Int?
+  offAmazonClicks                             Int?
+  productReviewPageVisits                     Int?
+  playTrailers                                Int?
+  totalCost                                   Float?
+  offAmazonProductSales                       Int?
+  frequencyAverage                            Float?
+  videoStreamsViews                           Int?
+  eCPSkillInvocation                          Float?
+  newToBrandROAS                              Float?
+  orderEndDate                                String?
+  playTrailersViews                           Int?
+  eCPAddToWatchlist                           Float?
+  totalNewToBrandUnitsSold                    Int?
+  addToList                                   Int?
+  eCPP                                        Float?
+  mobileAppFirstStartViews                    Int?
+  leadClicks                                  Int?
+  eCPProductReviewPageVisit                   Float?
+  totalProductReviewPageVisitRate             Float?
+  eCPM                                        Float?
+  addToCartClicks                             Int?
+  searchClicks                                Int?
+  videoAdSkipForwards                         Int?
+  appStoreUsageHoursViews                     Int?
+  checkout                                    Int?
+  appStoreUsageHoursClicks                    Int?
+  eCPC                                        Float?
+  audioAdMute                                 Int?
+  videoAdFirstQuartile                        Int?
+  audioAdResume                               Int?
+  offAmazonConversions                        Int?
+  combinedPurchases                           Int?
+  videoAdStart                                Int?
+  brandSearchesClicks                         Int?
+  amazonDSPAudienceFee                        Float?
+  entityId                                    String?
+  eCPBrandSearch                              Float?
+  newToBrandUnitsSold                         Int?
+  offAmazonViews                              Int?
+  rentals                                     Int?
+  measurableRate                              Float?
+  videoAdCreativeViews                        Int?
+  threePPreBidFeeOracleDataCloud              Float?
+  paidSubscriptionSignupRate                  Int?
+  advertiserTimezone                          String?
+  videoStreamsRate                            Int?
+  combinedProductSales                        Float?
+  totalFee                                    Float?
+  videoStreams                                Int?
+  contactValueSum                             Int?
+  threePFeeCPM1                               Float?
+  threePFeeCPM2                               Float?
+  clicks                                      Int?
+  brandSearchesViews                          Int?
+  pageViewValueSum                            Int?
+  agencyFee                                   Float?
+  threePFeeCPM3                               Float?
+  searchViews                                 Int?
+  contactCPA                                  Float?
+  totalNewToBrandPurchaseRate                 Float?
+  appStoreFirstSessionHours                   Int?
+  brandSearchRate                             Float?
+  orderId                                     Int?
+  subscriptionSignupClicks                    Int?
+  reach                                       Float?
+  appStoreOpensClicks                         Int?
+  ROAS                                        Float?
+  totalAddToCartClicks                        Int?
+  grossClickThroughs                          Int?
+  eCPVideoStream                              Float?
+  totalECPSubscribeAndSave                    Float?
+  signUp                                      Int?
+  audioAdSkip                                 Int?
+  addToWatchlist                              Int?
+  videoAdEndStateClicks                       Int?
+  totalAddToCart                              Int?
+  eCPSubscriptionSignup                       Float?
+  totalSubscribeAndSaveRate                   Float?
+  audioAdViews                                Int?
+  freeTrialSubscriptionSignupViews            Int?
+  totalNewToBrandDPVViews                     Int?
+  totalNewToBrandROAS                         Float?
+  videoStreamsClicks                          Int?
+  leadValueSum                                Int?
+  otherCVR                                    Int?
+  contactClicks                               Int?
+  addToShoppingCartCPA                        Float?
+  skillInvocation                             Int?
+  downloadedVideoPlaysClicks                  Int?
+  alexaSkillEnable                            Int?
+  threePPreBidFeePixalate                     Float?
+  totalDetailPageViewRate                     Float?
+  newToBrandPurchasesViews                    Int?
+  videoAdPause                                Int?
+  combinedROAS                                Float?
+  downloadedVideoPlaysViews                   Int?
+  searchCPA                                   Float?
+  pageViewViews                               Int?
+  pageViews                                   Int?
+  threePFeeIntegralAdScience                  Float?
+  audioAdPause                                Int?
+  videoAdImpressions                          Int?
+  combinedECPP                                Float?
+  subscribeCVR                                Int?
+  otherValueSum                               Int?
+  totalERPM                                   Float?
+  other                                       Int?
+  offAmazonPurchaseRate                       Float?
+  interactiveImpressions                      Int?
+  signUpValueSum                              Int?
+  audioAdStart                                Int?
+  freeTrialSubscriptionSignups                Int?
+  totalECPAddToCart                           Float?
+  rentalsClicks                               Int?
+  signUpCVR                                   Int?
+  totalDetailPageViewViews                    Int?
+  addToCart                                   Int?
+  videoAdClicks                               Int?
+  offAmazonPurchasesClicks                    Int?
+  rentalsViews                                Int?
+  mobileAppFirstStartCPA                      Float?
+  totalAddToCartViews                         Int?
+  otherValueAverage                           Float?
+  videoAdComplete                             Int?
+  addToCartRate                               Float?
+  appStoreOpensViews                          Int?
+  offAmazonUnitsSold                          Int?
+  applicationCPA                              Float?
+  totalAddToListClicks                        Int?
+  eRPM                                        Float?
+  combinedPurchaseRate                        Float?
+  subscribeValueAverage                       Float?
+  offAmazonCVR                                Float?
+  newSubscribeAndSaveViews                    Int?
+  totalSales                                  Float?
+  appStoreFirstOpensRate                      Int?
+  freeTrialSubscriptionSignupClicks           Int?
+  impressions                                 Int?
+  householdReach                              Float?
+  lead                                        Int?
+  advertiserId                                BigInt?
+  viewableImpressions                         Int?
+  appStoreFirstOpens                          Int?
+  NewToBrandECPP                              Float?
+  applicationValueSum                         Int?
+  combinedERPM                                Float?
+  applicationViews                            Int?
+  threePFeeIntegralAdScienceAbsorbed          Float?
+  appStoreOpensRate                           Int?
+  totalNewToBrandDPVRate                      Float?
+  detailPageViewViews                         Int?
+  totalSubscribeAndSaveClicks                 Int?
+  date                                        DateTime? @db.DateTime(0)
+  threePFeeAutomotive                         Float?
+  purchasesClicks                             Int?
+  audioAdCompanionBannerClicks                Int?
+  appStoreUsageHours                          Int?
+  detailPageViews                             Int?
+  subscriptionSignupViews                     Int?
+  totalNewToBrandSales                        Float?
+  addToListRate                               Float?
+  contactViews                                Int?
+  addToCartViews                              Int?
+  sales                                       Float?
+  productReviewPageVisitsClicks               Int?
+  videoDownloads                              Int?
+  purchaseRate                                Float?
+  subscribeValueSum                           Int?
+  invalidClickThroughRate                     Float?
+  addToShoppingCart                           Int?
+  leadCVR                                     Int?
+  purchasesViews                              Int?
+  newSubscribeAndSave                         Int?
+  newSubscribeAndSaveRate                     Float?
+  audioAdCompletions                          Int?
+  otherViews                                  Int?
+  subscribeViews                              Int?
+  eCPAppStoreOpens                            Float?
+  alexaSkillEnableViews                       Int?
+  newToBrandDetailPageViewViews               Int?
+  marketplace                                 Int?
+  totalNewToBrandPurchasesViews               Int?
+  orderCurrency                               String?
+  totalNewToBrandERPM                         Float?
+  combinedPurchasesClicks                     Int?
+  applicationCVR                              Int?
+  newToBrandPurchasesPercentage               Float?
+  videoDownloadRate                           Int?
+  newToBrandProductSales                      Float?
+  pageViewClicks                              Int?
+  invalidImpressionRate                       Float?
+  totalDetailPageView                         Int?
+  threePPreBidFeeDoubleVerify                 Float?
+  signUpViews                                 Int?
+  eCPAlexaSkillEnable                         Float?
+  threePPreBidFeeIntegralAdScience            Float?
+  videoAdMute                                 Int?
+  downloadedVideoPlayRate                     Int?
+  totalAddToListRate                          Float?
+  totalSubscribeAndSaveViews                  Int?
+  threePFeeDoubleVerify                       Float?
+  leadValueAverage                            Float?
+  searchValueAverage                          Float?
+  videoAdResume                               Int?
+  newToBrandPurchaseRate                      Float?
+  addToShoppingCartValueSum                   Int?
+  newSubscribeAndSaveClicks                   Int?
+  playTrailerRate                             Int?
+  addToShoppingCartValueAverage               Float?
+  signUpClicks                                Int?
+  eCPRental                                   Float?
+  checkoutCPA                                 Float?
+  subscriptionSignups                         Int?
+  appStoreFirstSessionHoursClicks             Int?
+  newToBrandPurchases                         Int?
+  combinedUnitsSold                           Int?
+  supplyCost                                  Float?
+  eCPnewSubscribeAndSave                      Float?
+  videoAdSkipBacks                            Int?
+  advertiserName                              String?
+  offAmazonECPP                               Float?
+  eCPFreeTrialSubscriptionSignup              Float?
+  amazonDSPConsoleFee                         Float?
+  orderStartDate                              String?
+  totalSubscribeAndSave                       Int?
+  newToBrandPurchasesClicks                   Int?
+  totalAddToCartRate                          Float?
+  eCPPlayTrailer                              Float?
+  advertiserCountry                           String?
+  eCPDownloadedVideoPlays                     Float?
+  intervalStart                               String?
+  alexaSkillEnableRate                        Int?
+  signUpValueAverage                          Float?
+  addToShoppingCartViews                      Int?
+  subscribe                                   Int?
+  totalROAS                                   Float?
+  offAmazonPurchasesViews                     Int?
+  totalECPProductReviewPageVisit              Float?
+  addToShoppingCartCVR                        Int?
+  totalECPP                                   Float?
+  threePFeeCPM3Absorbed                       Float?
+  totalNewToBrandPurchases                    Int?
+  eCPDetailPageView                           Float?
+  addToWatchlistClicks                        Int?
+  productReviewPageVisitRate                  Float?
+  threePFeeDoubleclickCampaignManagerAbsorbed Float?
+  leadViews                                   Int?
+  appStoreFirstSessionHoursViews              Int?
+  notificationClicks                          Int?
+  totalNewToBrandECPP                         Float?
+  audioAdProgression                          Int?
+  application                                 Int?
+  threePFeeDoubleclickCampaignManager         Float?
+  alexaSkillEnableClicks                      Int?
+  totalNewToBrandDPVClicks                    Int?
+  eCPVideoAdCompletion                        Float?
+  brandSearches                               Int?
+  totalDetailPageViewClicks                   Int?
+  yearweek_year                               Int?
+  yearweek_week                               Int?
+  yearmonth_year                              Int?
+  yearmonth_month                             Int?
+
+  @@index([yearweek_week, yearweek_year], name: "dsp_data_yearweek_index")
+  @@index([yearmonth_month, yearmonth_year], name: "dsp_data_yearmonth_index")
+  @@index([date], name: "dsp_data_date_index")
+  @@index([advertiserId], name: "dsp_data_advertiser_id")
+}
+
+model restock_data {
+  id                                     Int       @id @default(autoincrement())
+  brand                                  Brands    @relation(fields: [brandId], references: [id])
+  brandId                                Int
+  country                                String?
+  productName                            String?
+  fnSku                                  String?
+  merchantSku                            String?
+  asin                                   String?
+  condition                              String?
+  supplier                               String?
+  supplierPartNo                         String?
+  currencyCode                           String?
+  price                                  Float?
+  salesLast30Days                        Float?
+  unitsSoldLast30Days                    Int?
+  totalUnits                             Int?
+  inbound                                Int?
+  available                              Int?
+  fcTransfer                             Int?
+  fcProcessing                           Int?
+  customOrder                            Int?
+  unFulFillable                          Int?
+  working                                Int?
+  shipped                                Int?
+  receiving                              Int?
+  fulfilledBy                            String?
+  totalDaysOfSupply                      String?
+  daysOfSupplyAtAmazonFulfillmentNetwork String?
+  alert                                  String?
+  recommendedReplenishmentQty            Int?
+  recommendedShipDate                    String?
+  recommendedAction                      String?
+  unitStorageSize                        String?
+  report_date                            DateTime? @db.DateTime(0)
+
+  @@index(report_date, name: "restock_data__date_idx")
+  @@index(asin, name: "restock_data__asin_idx")
+}
+
+model inventory_management {
+  id         Int    @id @default(autoincrement())
+  asin       String
+  brand      Brands @relation(fields: [brandId], references: [id])
+  brandId    Int
+  multiplier Float?
+  on_hand    Int?
+
+  @@unique([asin, brandId], name: "inventory_management_asin_brandId_key")
+}
+
+model post_flat_file_fullfilment_data {
+  id                     Int       @id @default(autoincrement())
+  brand                  Brands    @relation(fields: [brandId], references: [id])
+  brandId                Int
+  orderId                String?
+  orderItemId            String?
+  quantity               Int?
+  shipDate               DateTime? @db.DateTime(0)
+  carrierCode            String?
+  carrierName            String?
+  trackingNumber         String?
+  shipMethod             String?
+  shipFromSupplySourceId String?
+  report_date            DateTime? @db.DateTime(0)
+}
+
+model manual_dsp_data {
+  id              Int      @id @default(autoincrement())
+  brand           Brands   @relation(fields: [brandsId], references: [id])
+  brandsId        Int
+  report_date     DateTime @db.DateTime(0)
+  spend           Float
+  sales           Float
+  yearweek_year   Int?
+  yearweek_week   Int?
+  yearmonth_year  Int?
+  yearmonth_month Int?
+
+  @@index([yearweek_week, yearweek_year], name: "dsp_manual_data_yearweek_index")
+  @@index([yearmonth_month, yearmonth_year], name: "dsp_manual_data_yearmonth_index")
+  @@index([report_date], name: "dsp_manual_data_date_index")
+}
+
+model walmart_placement {
+  id                           Int       @id @default(autoincrement())
+  brandId                      Int
+  date                         DateTime? @db.DateTime(0)
+  campaignId                   Int
+  adGroupId                    Int
+  ntbUnits3Days                Int?
+  ntbOrders3Days               Int?
+  ntbRevenue3Days              Int?
+  ntbUnits14Days               Int?
+  ntbOrders14Days              Int?
+  ntbRevenue14Days             Int?
+  ntbUnits30Days               Int?
+  ntbOrders30Days              Int?
+  ntbRevenue30Days             Int?
+  adSpend                      Int?
+  numAdsShown                  Int?
+  numAdsClicks                 Int?
+  attributedOrders3Days        Int?
+  attributedOrders14Days       Int?
+  attributedOrders30Days       Int?
+  attributedUnits3Days         Int?
+  attributedUnits14Days        Int?
+  attributedUnits30Days        Int?
+  directAttributedSales3days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales14days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales30days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales3days      Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales14days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales30days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales3days    Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales14days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales30days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales3days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales14days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales30days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales3days           Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales14days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales30days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  placement                    String?   @db.VarChar(50)
+
+  @@index([adGroupId], name: "walmart_placement_adGroupId_index")
+  @@index([brandId], name: "walmart_placement_brand_idx")
+  @@index([campaignId], name: "walmart_placement_campaignId_index")
+  @@index([date], name: "walmart_placement_date_index")
+}
+
+model walmart_platform {
+  id                           Int       @id @default(autoincrement())
+  brandId                      Int
+  date                         DateTime? @db.DateTime(0)
+  campaignId                   Int
+  adGroupId                    Int
+  ntbUnits3Days                Int?
+  ntbOrders3Days               Int?
+  ntbRevenue3Days              Int?
+  ntbUnits14Days               Int?
+  ntbOrders14Days              Int?
+  ntbRevenue14Days             Int?
+  ntbUnits30Days               Int?
+  ntbOrders30Days              Int?
+  ntbRevenue30Days             Int?
+  adSpend                      Int?
+  numAdsShown                  Int?
+  numAdsClicks                 Int?
+  attributedOrders3Days        Int?
+  attributedOrders14Days       Int?
+  attributedOrders30Days       Int?
+  attributedUnits3Days         Int?
+  attributedUnits14Days        Int?
+  attributedUnits30Days        Int?
+  directAttributedSales3days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales14days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales30days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales3days      Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales14days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales30days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales3days    Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales14days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales30days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales3days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales14days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales30days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales3days           Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales14days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales30days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  platform                     String?   @db.VarChar(50)
+
+  @@index([adGroupId], name: "walmart_platform_adGroupId_index")
+  @@index([brandId], name: "walmart_platform_brand_idx")
+  @@index([campaignId], name: "walmart_platform_campaignId_index")
+  @@index([date], name: "walmart_platform_date_index")
+}
+
+model walmart_page_type {
+  id                           Int       @id @default(autoincrement())
+  brandId                      Int
+  date                         DateTime? @db.DateTime(0)
+  campaignId                   Int
+  adGroupId                    Int
+  ntbUnits3Days                Int?
+  ntbOrders3Days               Int?
+  ntbRevenue3Days              Int?
+  ntbUnits14Days               Int?
+  ntbOrders14Days              Int?
+  ntbRevenue14Days             Int?
+  ntbUnits30Days               Int?
+  ntbOrders30Days              Int?
+  ntbRevenue30Days             Int?
+  adSpend                      Int?
+  numAdsShown                  Int?
+  numAdsClicks                 Int?
+  attributedOrders3Days        Int?
+  attributedOrders14Days       Int?
+  attributedOrders30Days       Int?
+  attributedUnits3Days         Int?
+  attributedUnits14Days        Int?
+  attributedUnits30Days        Int?
+  directAttributedSales3days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales14days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  directAttributedSales30days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales3days      Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales14days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  advertisedSkuSales30days     Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales3days    Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales14days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  brandAttributedSales30days   Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales3days  Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales14days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  relatedAttributedSales30days Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales3days           Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales14days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  otherSkuSales30days          Decimal?  @default(0.000) @db.Decimal(15, 3)
+  pageType                     String?   @db.VarChar(50)
+
+  @@index([adGroupId], name: "walmart_page_type_adGroupId_index")
+  @@index([brandId], name: "walmart_page_type_brand_idx")
+  @@index([campaignId], name: "walmart_page_type_campaignId_index")
+  @@index([date], name: "walmart_page_type_date_index")
+}
+
+model walmart_attributed_purchases {
+  id                     Int       @id @default(autoincrement())
+  brandId                Int
+  date                   DateTime? @db.DateTime(0)
+  campaignId             Int?
+  adGroupId              Int?
+  advertisedItemId       Int?
+  attributedOrders3days  Int?
+  attributedOrders14days Int?
+  attributedOrders30days Int?
+  attributionType        String?   @db.VarChar(50)
+  ntbOrders3day          Int?
+  ntbOrders14days        Int?
+  ntbOrders30days        Int?
+  ntbRevenue3days        Float?
+  ntbRevenue14days       Float?
+  ntbRevenue30days       Float?
+  ntbUnits3days          Int?
+  ntbUnits14days         Int?
+  ntbUnits30days         Int?
+  purchasedItemId        Int?
+  purchasedItemName      String?   @db.VarChar(512)
+  totalSales3days        Float?
+  totalSales14days       Float?
+  totalSales30days       Float?
+  totalUnits3days        Int?
+  totalUnits14days       Int?
+  totalUnits30day        Int?
+
+  @@index([adGroupId], name: "walmart_page_type_adGroupId_index")
+  @@index([brandId], name: "walmart_page_type_brand_idx")
+  @@index([campaignId], name: "walmart_page_type_campaignId_index")
+  @@index([date], name: "walmart_page_type_date_index")
+}
+
+model walmart_item_keyword {
+  id                        Int     @id @default(autoincrement())
+  brand                     Brands  @relation(fields: [brandid], references: [id])
+  brandid                   Int
+  ds                        String? @db.VarChar(255)
+  campaignid                Int?
+  adgroupid                 Int?
+  itemid                    String?
+  keywordid                 Int?
+  biddedkeyword             String? @db.Text
+  searchedkeyword           String? @db.Text
+  matchtype                 String? @db.VarChar(50)
+  numadsshown               Int?
+  numadsclicks              Int?
+  adspend                   Float?
+  unitsold3days             Int?
+  viewrevenue3days          Float?
+  clickrevenue3days         Float?
+  brandviewrevenue3days     Float?
+  brandclickrevenue3days    Float?
+  relatedclickrevenue3days  Float?
+  unitsold30days            Int?
+  viewrevenue30days         Float?
+  clickrevenue30days        Float?
+  brandviewrevenue30days    Float?
+  brandclickrevenue30days   Float?
+  relatedclickrevenue30days Float?
+
+  @@map("walmart_item_keyword")
+}
+
+model walmart_advertisers {
+  id                       Int       @id @default(autoincrement())
+  advertiserId             Int?
+  advertiserName           String?   @db.VarChar(255)
+  advertiserType           String?   @db.VarChar(50)
+  sellerId                 Int?
+  sellerName               String?   @db.VarChar(255)
+  accountSpendLimitReached String?   @db.VarChar(50)
+  apiAccessType            String?   @db.VarChar(50)
+  accessGrantTimeStamp     DateTime? @db.DateTime(0)
+  reportDate               DateTime? @db.DateTime(0)
+
+  @@unique([advertiserId], name: "walmart_advertisers_advertiser_key")
+}
+
+enum Brand_status {
+  Pending
+  Created
+  Deleted
+  Archived
+  WaitingForApproval
+}
+
+enum Role {
+  Walmart_admin
+  Amazon_admin
+  Admin
+  Manager
+  User
+}

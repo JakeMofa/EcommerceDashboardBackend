@@ -1,0 +1,11 @@
+Migration started at Tue Aug 22 18:04:31 +03 2023
+Processing database: vendo_user_db_vZj2RlW4cU_joanne_hsieh at Tue Aug 22 18:04:31 +03 2023
+Processing database: vendo_user_db_2ux2rwVCWu_oral_essentials at Tue Aug 22 18:04:31 +03 2023
+mysql: mysql: [Warning] Using a password on the command line interface can be insecure.[Warning] Using a password on the command line interface can be insecure.
+
+Finished processing database: vendo_user_db_vZj2RlW4cU_joanne_hsieh at Tue Aug 22 18:18:54 +03 2023
+Finished processing database: vendo_user_db_2ux2rwVCWu_oral_essentials at Tue Aug 22 18:26:00 +03 2023
+Migration finished at Tue Aug 22 18:26:00 +03 2023
+ERROR 2013 (HY000) at line 21: Lost connection to MySQL server during query
+^C -- query aborted
+Finished processing database: vendo_user_db_2ux2rwVCWu_oral_essentials at Tue Aug 22 19:10:33 +03 2023

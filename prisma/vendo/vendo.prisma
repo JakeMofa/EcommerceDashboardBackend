@@ -1,0 +1,241 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/vendo"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_VENDO_URL")
+}
+
+model advertisements {
+  id                 Int      @id @default(autoincrement())
+  startDate          String?  @db.VarChar(255)
+  endDate            String?  @db.VarChar(255)
+  portfolioName      String?  @db.VarChar(255)
+  currency           String?  @db.VarChar(255)
+  campaignName       String?  @db.VarChar(255)
+  AdGroupName        String?  @db.VarChar(255)
+  Targeting          String?  @db.VarChar(255)
+  matchType          String?  @db.VarChar(255)
+  customerSearchTerm String?  @db.VarChar(255)
+  impressions        String?  @db.VarChar(255)
+  clicks             String?  @db.VarChar(255)
+  CTR                String?  @db.VarChar(255)
+  CPC                String?  @db.VarChar(255)
+  Spend              String?  @db.VarChar(255)
+  totalSales         String?  @db.VarChar(255)
+  ACoS               String?  @db.VarChar(255)
+  RoAS               String?  @db.VarChar(255)
+  totalOrders        String?  @db.VarChar(255)
+  totalUnits         String?  @db.VarChar(255)
+  conversionRate     String?  @db.VarChar(255)
+  advertisedSKUUnits String?  @db.VarChar(255)
+  otherSKUUnits      String?  @db.VarChar(255)
+  advertisedSKUSales String?  @db.VarChar(255)
+  OtherSKUSales      String?  @db.VarChar(255)
+  uploadDate         String?  @db.VarChar(255)
+  year               String?  @db.VarChar(255)
+  month              String?  @db.VarChar(255)
+  week               String?  @db.VarChar(255)
+  companyId          Int
+  createdAt          DateTime @default(now()) @db.Timestamp(0)
+  updatedAt          DateTime @default(now()) @db.Timestamp(0)
+}
+
+model bestsales {
+  id                        Int       @id @default(autoincrement())
+  ASIN                      String?   @db.VarChar(255)
+  productTitle              String?   @db.VarChar(255)
+  link                      String?   @db.VarChar(255)
+  brand                     String?   @db.VarChar(255)
+  category                  String?   @db.VarChar(255)
+  sub_category              String?   @map("sub-category") @db.VarChar(255)
+  lowestPriceInLastWeek_USD String?   @map("lowestPriceInLastWeek-USD") @db.VarChar(255)
+  FBAOffer                  String?   @db.VarChar(255)
+  numberOfOffers            String?   @db.VarChar(255)
+  amazonOffer               String?   @db.VarChar(255)
+  numberOfReviews           String?   @db.VarChar(255)
+  businessSalesRank         String?   @db.VarChar(255)
+  businessSalesRankGrowth   String?   @db.VarChar(255)
+  pageViews                 String?   @db.VarChar(255)
+  manufacturerPartNumber    String?   @db.VarChar(255)
+  EAN                       String?   @db.VarChar(255)
+  UPC                       String?   @db.VarChar(255)
+  modelNumber               String?   @db.VarChar(255)
+  ISBN                      String?   @db.VarChar(255)
+  brandYouOffer             String?   @db.VarChar(255)
+  categoryYouOffer          String?   @db.VarChar(255)
+  productPerformance        String?   @db.VarChar(255)
+  topSalesRank              String?   @db.VarChar(255)
+  lowOfferCount             String?   @db.VarChar(255)
+  productNotYetOnAmazon     String?   @db.VarChar(255)
+  createdAt                 DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model company {
+  companyId      Int              @id @default(autoincrement())
+  companyName    String?          @db.VarChar(255)
+  registervendor registervendor[]
+}
+
+model passcode {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  passcode  String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+}
+
+model rawweek {
+  id                       Int      @id @default(autoincrement())
+  parentASIN               String?  @db.Text
+  childASIN                String?  @db.Text
+  title                    String?  @db.Text
+  SKU                      String?  @db.Text
+  sessions                 String?  @db.Text
+  sessionPercentage        String?  @db.Text
+  pageViews                String?  @db.Text
+  pageViewsPercentage      String?  @db.Text
+  buyBoxPercentage         String?  @db.Text
+  unitsOrdered             String?  @db.Text
+  unitsOrderedB2B          String?  @db.Text
+  unitSessionPercentage    String?  @db.Text
+  unitSessionPercentageB2B String?  @db.Text
+  orderedProductSales      String?  @db.Text
+  orderedProductSalesB2B   String?  @db.Text
+  totalOrderItems          String?  @db.Text
+  totalOrderItemsB2B       String?  @db.Text
+  uploadDate               String?  @db.Text
+  year                     String?  @db.Text
+  month                    String?  @db.Text
+  week                     String?  @db.Text
+  companyId                Int
+  createdAt                DateTime @default(now()) @db.Timestamp(0)
+  updatedAt                DateTime @default(now()) @db.Timestamp(0)
+}
+
+model registervendor {
+  id              Int      @id @default(autoincrement())
+  companyId       Int?
+  sellerId        String?  @db.VarChar(255)
+  MWSAuthToken    String?  @db.VarChar(255)
+  accessKey       String?  @db.VarChar(255)
+  secretAccessKey String?  @db.VarChar(255)
+  company         company? @relation(fields: [companyId], references: [companyId], onDelete: NoAction, onUpdate: NoAction, map: "registervendor_ibfk_1")
+
+  @@index([companyId], map: "companyId")
+}
+
+model reportids {
+  id         Int                   @default(autoincrement())
+  reportId   String                @db.VarChar(255)
+  reportType String?               @db.VarChar(255)
+  companyId  Int?
+  isComplete reportids_isComplete? @default(NO)
+
+  @@id([id, reportId])
+}
+
+model reportrequestlist {
+  id                     Int      @id @default(autoincrement())
+  reportType             String?  @db.VarChar(255)
+  reportRequestId        String?  @db.VarChar(255)
+  marketplace            String?  @db.VarChar(255)
+  reportProcessingStatus String?  @db.VarChar(255)
+  createdAt              DateTime @default(now()) @db.Timestamp(0)
+}
+
+model reviews {
+  id         Int       @id @default(autoincrement())
+  date       String?   @db.VarChar(255)
+  rating     String?   @db.VarChar(255)
+  comments   String?   @db.Text
+  response   String?   @db.VarChar(255)
+  orderId    String?   @db.VarChar(255)
+  raterEmail String?   @db.VarChar(255)
+  createdAt  DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model salesbyweek {
+  id                       Int      @id @default(autoincrement())
+  parentASIN               String?  @db.Text
+  title                    String?  @db.Text
+  sessions                 String?  @db.Text
+  sessionPercentage        String?  @db.Text
+  pageViews                String?  @db.Text
+  pageViewsPercentage      String?  @db.Text
+  buyBoxPercentage         String?  @db.Text
+  unitsOrdered             String?  @db.Text
+  unitsOrderedB2B          String?  @db.Text
+  unitSessionPercentage    String?  @db.Text
+  unitSessionPercentageB2B String?  @db.Text
+  orderedProductSales      String?  @db.Text
+  orderedProductSalesB2B   String?  @db.Text
+  totalOrderItems          String?  @db.Text
+  totalOrderItemsB2B       String?  @db.Text
+  uploadDate               String?  @db.Text
+  year                     String?  @db.Text
+  month                    String?  @db.Text
+  week                     String?  @db.Text
+  companyId                Int
+  createdAt                DateTime @default(now()) @db.Timestamp(0)
+  updateAt                 DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model salesbyweektemptable {
+  id                       Int      @default(0)
+  parentASIN               String?  @db.Text
+  title                    String?  @db.Text
+  sessions                 String?  @db.Text
+  sessionPercentage        String?  @db.Text
+  pageViews                String?  @db.Text
+  pageViewsPercentage      String?  @db.Text
+  buyBoxPercentage         String?  @db.Text
+  unitsOrdered             String?  @db.Text
+  unitsOrderedB2B          String?  @db.Text
+  unitSessionPercentage    String?  @db.Text
+  unitSessionPercentageB2B String?  @db.Text
+  orderedProductSales      String?  @db.Text
+  orderedProductSalesB2B   String?  @db.Text
+  totalOrderItems          String?  @db.Text
+  totalOrderItemsB2B       String?  @db.Text
+  uploadDate               String?  @db.Text
+  year                     String?  @db.Text
+  month                    String?  @db.Text
+  week                     String?  @db.Text
+  createdAt                DateTime @default(now()) @db.Timestamp(0)
+  updateAt                 DateTime @default(now()) @db.Timestamp(0)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model session {
+  userId    Int
+  token     String?  @db.Text
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+
+  @@ignore
+}
+
+model base_users {
+  id        Int             @id @default(autoincrement())
+  email     String?         @db.VarChar(255)
+  password  String?         @db.VarChar(255)
+  userType  users_userType?
+  companyId Int
+  createdAt DateTime        @default(now()) @db.Timestamp(0)
+  updatedAt DateTime        @default(now()) @db.Timestamp(0)
+}
+
+enum users_userType {
+  admin
+  user
+  manager
+}
+
+enum reportids_isComplete {
+  YES
+  NO
+}

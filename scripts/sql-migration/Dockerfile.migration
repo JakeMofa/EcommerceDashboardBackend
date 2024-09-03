@@ -1,0 +1,15 @@
+# Use a base image with MySQL client installed
+FROM mysql:latest
+
+# Set work directory
+WORKDIR /app
+
+# Copy the script into the container
+COPY migrate.sh /app/
+COPY migrate.sql /app/
+
+# Grant execute permission to the script
+RUN chmod +x /app/migrate.sh
+
+# Set the entrypoint to your script
+ENTRYPOINT ["/app/migrate.sh"]

@@ -1,0 +1,30 @@
+pipelines:
+  pull-requests:
+    '**':
+      - step:
+          name: Build
+          image: node:lts-alpine
+          script:
+            - npm install
+            - npm run build
+  # branches:
+  #   develop:
+  #     - step:
+  #         name: Deploy to Staging
+  #         script:
+  #           - pipe: atlassian/ssh-run:0.2.8
+  #             variables:
+  #               SSH_USER: 'ec2-user'
+  #               SERVER: 'ec2-staging-ip.compute-1.amazonaws.com'
+  #               COMMAND: 'cd /path/to/staging/project && git pull && docker-compose down && docker-compose up --build -d'
+  #               SSH_KEY: $STAGING_PRIVATE_KEY
+  #   master:
+  #     - step:
+  #         name: Deploy to Production
+  #         script:
+  #           - pipe: atlassian/ssh-run:0.2.8
+  #             variables:
+  #               SSH_USER: 'ec2-user'
+  #               SERVER: 'ec2-production-ip.compute-1.amazonaws.com'
+  #               COMMAND: 'cd /path/to/production/project && git pull && docker-compose down && docker-compose up --build -d'
+  #               SSH_KEY: $PRODUCTION_PRIVATE_KEY
